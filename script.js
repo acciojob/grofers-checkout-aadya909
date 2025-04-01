@@ -6,6 +6,14 @@ document.addEventListener("DOMContentLoaded", function () {
     getSumBtn.append("Get Total Price");
     document.body.appendChild(getSumBtn);
 
+    // Create an answer display element if it doesn't exist
+    let ansElement = document.getElementById("ans");
+    if (!ansElement) {
+        ansElement = document.createElement("div");
+        ansElement.id = "ans";
+        document.body.appendChild(ansElement);
+    }
+
     const getSum = () => {
         let totalPrice = 0;
 
@@ -14,29 +22,12 @@ document.addEventListener("DOMContentLoaded", function () {
             totalPrice += parseFloat(priceElement.textContent) || 0; // Ensure it's a number
         });
 
-        // Remove any existing total row before adding a new one
-        let existingTotalRow = document.querySelector(".total-price-row");
-        if (existingTotalRow) {
-            existingTotalRow.remove();
-        }
-
-        // Create a new row
-        let table = document.querySelector("table");
-        let newRow = document.createElement("tr");
-        newRow.classList.add("total-price-row");
-        let totalCell = document.createElement("td");
-
-        // Set colspan to span all columns (assuming two columns: Item and Price)
-        totalCell.setAttribute("colspan", "2");
-        totalCell.style.fontWeight = "bold";
-        totalCell.textContent = "Total Price: Rs " + totalPrice.toFixed(2);
-
-        // Append the totalCell to the newRow and the newRow to the table
-        newRow.appendChild(totalCell);
-        table.appendChild(newRow);
+        // Update the ans element with the total price
+        ansElement.textContent = "Total Price: Rs " + totalPrice.toFixed(2);
     };
 
     getSumBtn.addEventListener("click", getSum);
 });
+
 
 
